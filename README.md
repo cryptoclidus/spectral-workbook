@@ -26,3 +26,8 @@ npm start
 ```
 
 The program should start and the app window should automatically open and load.
+
+### Screenshots
+
+The prototype app view:
+![Image of prototype screenshot](https://raw.githubusercontent.com/cryptoclidus/spectral-workbook/master/screenshots/screenshot.JPG)
