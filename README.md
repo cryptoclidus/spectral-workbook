@@ -8,11 +8,8 @@ To try out the project or to make modifications, simply clone or download the re
 
 ### Prerequisites
 
-The requirements to run this app are node.js, npm, and electron. If you install node.js, it comes with npm so you should only have to install electron after that using:
-
-```
-npm install --save electron
-```
+The requirement to run this app is to have node.js (and npm, which comes with node.js automatically) installed.
+See here for more info: https://nodejs.org/en/
 
 ### Run the app
 
