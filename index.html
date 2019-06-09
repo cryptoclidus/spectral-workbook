@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+	<title>Spectral Workbook</title>
+	
+	<link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+	<script>window.$ = window.jQuery = require('jquery');</script>
+	<script>require('popper.js');</script>
+	<script>require('bootstrap');</script>
+	<script>require('Chart.js');</script>
+
+  </head>
+  
+  <body>  
+    <!-- Navigator Bar -->
+	<ul class="nav nav-tabs">
+      <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#capture">Capture</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#settings">Settings</a></li>
+    </ul>
+
+    <!-- Pages -->
+    <div class="tab-content">
+	  <!-- Capture Page -->
+      <div id="capture" class="tab-pane container active">
+		 <canvas id="graph"></canvas>
+	  </div>
+	  
+	  <!-- Settings Page -->
+      <div id="settings" class="tab-pane container">
+          <h3>Cam Settings</h3>
+      </div>
+    </div>
+	
+	<script>
+	// set up graph context
+	var ctx = $("#graph")[0].getContext('2d');
+	
+	// define gradient
+	var gradient = ctx.createLinearGradient(0,0,1000,0);
+	gradient.addColorStop(0, "rgba(0, 0, 255,0.6)");
+	gradient.addColorStop(0.3,"rgba(0, 255, 255,0.6)");
+	gradient.addColorStop(0.4,"rgba(102, 255, 102,0.6)");
+	gradient.addColorStop(0.6,"rgba(255, 255, 0,0.6)");
+	gradient.addColorStop(1, "rgba(255,0,0,0.6)");
+
+	function formatData(line) {
+	  let r = [];
+	  let g = [];
+	  let b = [];
+	  let avg = [];
+	  var pixel = 0;
+	  line.forEach(px => {
+		r.push({x: pixel,y: px['r']});
+		g.push({x: pixel,y: px['g']});
+		b.push({x: pixel,y: px['b']});
+		avg.push({x: pixel,y: px['average']});
+		pixel += 1;
+	  });
+	  let array = [r,g,b,avg];
+	  console.log(array[0]);
+	  return array;
+	};
+	
+	var requestURL = "https://raw.githubusercontent.com/cryptoclidus/spectrabench/master/spectralwb-159597.json"
+	var request = new XMLHttpRequest();
+	request.open('GET', requestURL);
+	request.responseType = 'json';
+	request.send();
+
+	request.onload = function() {
+	  var spectraldata = request.response;
+	  var data = formatData(spectraldata);
+	  // plot new
+	  var myLineChart = new Chart(ctx, {
+	      type: 'scatter',
+		  data: {
+			datasets: [{
+			  label: "red",
+			  data: data[0],
+			  fill: false,
+			  showLine: true,
+			  pointBackgroundColor: 'rgba(0,0,0,0)',
+			  pointBorderColor: 'rgba(0,0,0,0)',
+			  pointHoverBackgroundColor: "orange"
+			}, {
+			  label: "green",
+			  data: data[1],
+			  showLine: true,
+			  fill: false,
+			  pointBackgroundColor: 'rgba(0,0,0,0)',
+			  pointBorderColor: 'rgba(0,0,0,0)',
+			  pointHoverBackgroundColor: "orange"
+			}, {
+			  label: "blue",
+			  data: data[2],
+			  showLine: true,
+			  fill: false,
+			  pointBackgroundColor: 'rgba(0,0,0,0)',
+			  pointBorderColor: 'rgba(0,0,0,0)',
+			  pointHoverBackgroundColor: "orange"
+			}, {
+			  label: "average",
+			  data: data[3],
+			  showLine: true,
+			  fill: true,
+			  backgroundColor: gradient,
+			  pointBackgroundColor: 'rgba(0,0,0,0)',
+			  pointBorderColor: 'rgba(0,0,0,0)',
+			  pointHoverBackgroundColor: "orange"
+			},]
+		  },
+		  options: {
+		    lineTension: 0,
+			animation: {
+			  duration: 0
+			},
+			hover: {
+            animationDuration: 0 // duration of animations when hovering an item
+            },
+		    scales: {
+			  xAxes: [{
+			    type: 'linear',
+				position: 'bottom'
+			  }]
+			},
+		  }
+	  });
+	
+	};
+	
+    </script>
+  </body>
+</html>
