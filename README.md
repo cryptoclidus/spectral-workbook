@@ -1,6 +1,6 @@
 # spectral-workbook
 
-An electron app to fetch spectral data, crunch calculations, and upload to publiclab's spectral workench. This project is in prototype stage.
+An electron app to fetch spectral data, crunch calculations, and upload to publiclab's spectral workench. This project is in prototype stage. While other spectrometer software exist, currently there aren't any known programs designed to fetch live spectral data directly from a raspberry pi. The goal is to have a dedicated software for desktops to upload webcam and raspberry pi data directly to spectralworkbench to greatly enhance the data collection experience. Data can be previewed and downloaded/uploaded with basic calculations and calibration for a faster workflow.
 
 ## Getting Started
 
