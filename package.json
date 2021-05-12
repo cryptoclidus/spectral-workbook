@@ -10,7 +10,7 @@
   "license": "CC0",
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "jquery": "^3.4.1",
     "plotly.js": "^1.48.1",
     "popper.js": "^1.14.7"
